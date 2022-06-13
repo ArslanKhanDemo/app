@@ -2,16 +2,25 @@ import CardTemplate from "./shared/cardTemplate";
 import { FaTimes, FaEdit } from "react-icons/fa";
 import React, { useContext } from "react";
 import FeedbackContext from "./FeedbackContext";
+import Loading from "./shared/Loading";
 
 function FeedBackList({ handelDeleteChild }) {
-  const {value,feedbackEdit} = useContext(FeedbackContext);
+  const { value, feedbackEdit, isLoading } = useContext(FeedbackContext);
 
-  const handelDelete = (id,value) => {
-    console.log("form list",value);
-    handelDeleteChild(id,value);
+  const handelDelete = (id, value) => {
+    console.log("form list", value);
+    handelDeleteChild(id, value);
   };
 
-  return (
+  if (!isLoading && (!value || value.length === 0)) {
+    return <p>No Feedback Yet</p>;
+  }
+
+  return isLoading ? (
+    <>
+      <Loading />
+    </>
+  ) : (
     <>
       <ul>
         {value.map((data, index) => (
@@ -21,7 +30,7 @@ function FeedBackList({ handelDeleteChild }) {
             <FaTimes
               className="close"
               onClick={() => {
-                handelDelete(data.id,value);
+                handelDelete(data.id, value);
               }}
             ></FaTimes>
             <FaEdit

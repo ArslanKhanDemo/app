@@ -14,6 +14,14 @@ function FeedBackStats() {
     }, 0) / value.length;
 
   average = average.toFixed(1);
+
+
+  if(!value || value.length === 0 ){
+    return  <div className="stats">
+    <div className="length">0: Reviews</div>
+    <div className="average">Average: 0</div>
+  </div>
+  }
  
 
   return (
